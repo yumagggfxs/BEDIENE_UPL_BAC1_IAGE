@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notifications | ReminderPro</title>
+
+<link rel="stylesheet" href="notifications.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ===========================
+   NOTIFICATIONS - ReminderPro
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+}
+
+/* ===== LAYOUT ===== */
+
+.container{
+    display:flex;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#0d6efd;
+    position:fixed;
+    left:0;
+    top:0;
+    color:#fff;
+    padding:20px;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    margin:10px 0;
+}
+
+.sidebar ul li a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#fff;
+    text-decoration:none;
+    padding:12px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active a{
+    background:#fff;
+    color:#0d6efd;
+}
+
+/* ===== CONT
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+<h2>ReminderPro</h2>
+
+<ul>
+
+<li>
+<a href="tableau_de_bord.html">
+<i class="fa-solid fa-house"></i>
+Tableau de bord
+</a>
+</li>
+
+<li>
+<a href="creer_evenement.html">
+<i class="fa-solid fa-calendar-plus"></i>
+Créer un événement
+</a>
+</li>
+
+<li>
+<a href="mes_evenements.html">
+<i class="fa-solid fa-calendar-days"></i>
+Mes événements
+</a>
+</li>
+
+<li>
+<a href="partager_evenement.html">
+<i class="fa-solid fa-share-nodes"></i>
+Partager</a>
+</li>
+
+<li class="active">
+<a href="#">
+<i class="fa-solid fa-bell"></i>
+Notifications
+</a>
+</li>
+
+<li>
+<a href="profil.html">
+<i class="fa-solid fa-user"></i>
+Profil
+</a>
+</li>
+
+<li>
+<a href="index.html">
+<i class="fa-solid fa-right-from-bracket"></i>
+Déconnexion
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<!-- CONTENU -->
+<div class="content">
+
+<header>
+<h1>🔔 Notifications</h1>
+<p>Vos rappels et alertes importantes</p>
+</header>
+
+<div id="notificationsList" class="notifications"></div>
+
+</div>
+
+</div>
+
+<script src="notifications.js"></script>
+<script>
+  // ===============================
+// NOTIFICATIONS - ReminderPro
+// ===============================
+
+const container = document.getElementById("notificationsList");
+
+// Charger les notifications
+function chargerNotifications() {
+
+    container.innerHTML = "";
+
+    let evenements = JSON.parse(localStorage.getItem("evenements")) || [];
+
+    if (evenements.length === 0) {
+        container.innerHTML = "<p style='color:#666'>Aucune notification pour le moment.</p>";
+        return;
+    }
+
+    const aujourdHui = new Date().toISOString().split("T")[0];
+
+    evenements.forEach(ev => {
+
+        let card = document.createElement("div");
+        card.classList.add("notification-card");
+
+        let message = "";
+        let type = "success";
+
+        // Événement aujourd’hui
+        if (ev.date === aujourdHui) {
+            message = `🔴 Aujourd'hui : ${ev.titre} à ${ev.heure}`;
+            type = "danger";
+        }
+
+        // Événement futur proche (simple logique)
+        else {
+            let dateEvent = new Date(ev.date);
+            let today = new Date();
+
+            let diff = Math.ceil((dateEvent - today) / (1000 * 60 * 60 * 24));
+
+            if (diff === 1) {
+                message = `🟡 Demain : ${ev.titre} à ${ev.heure}`;
+                type = "warning";
+            }
+
+            else if (diff > 1 && diff <= 3) {
+                message = `🔵 Bientôt : ${ev.titre} le ${ev.date}`;
+                type = "success";
+            }
+
+            else {
+                message = `📅 ${ev.titre} prévu le ${ev.date}`;
+                type = "success";
+            }
+        }
+
+        card.classList.add(type);
+
+        card.innerHTML = `
+            <h3><i class="fa-solid fa-bell"></i> Notification</h3>
+            <p>${message}</p>
+        `;
+
+        container.appendChild(card);
+    });
+
+    // Ajouter notification anniversaire
+    verifierAnniversaire();
+}
+
+
+// Vérification anniversaire
+function verifierAnniversaire() {
+
+    let naissance = localStorage.getItem("naissance");
+
+    if (!naissance) return;
+
+    const today = new Date();
+    const dateNaissance = new Date(naissance);
+
+    if (
+        today.getDate() === dateNaissance.getDate() &&
+        today.getMonth() === dateNaissance.getMonth()
+    ) {
+
+        let card = document.createElement("div");
+        card.classList.add("notification-card", "danger");
+
+        card.innerHTML = `
+            <h3>🎉 Joyeux anniversaire !</h3>
+            <p>Aujourd'hui est votre anniversaire. Toute l'équipe ReminderPro vous souhaite une excellente journée 🎂</p>
+        `;
+
+        container.prepend(card);
+    }
+}
+
+
+// Charger au démarrage
+chargerNotifications();
+</script>
+</body>
+
+</html>

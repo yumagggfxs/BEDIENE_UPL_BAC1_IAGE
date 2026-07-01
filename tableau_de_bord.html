@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tableau de bord | ReminderPro</title>
+
+<link rel="stylesheet" href="dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ===========================
+   DASHBOARD.CSS - ReminderPro
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    display:flex;
+    background:#f4f7fc;
+}
+
+/* ===== MENU LATÉRAL ===== */
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#0d6efd;
+    position:fixed;
+    left:0;
+    top:0;
+    color:#fff;
+    padding-top:20px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h2{
+    font-size:28px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    margin:10px 15px;
+}
+
+.sidebar ul li a{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    color:#fff;
+    text-decoration:none;
+    padding:15px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active a{
+    background:#ffffff;
+    color:#0d6efd;
+}
+
+/* ===== CONTENU ===== */
+
+.main{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:30px;
+}
+
+/* ===== HEADER ===== */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.welcome h1{
+    color:#0d6efd;
+    font-size:32px;
+}
+
+.welcome p{
+    color:#666;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.profile i{
+    font-size:22px;
+    color:#0d6efd;
+    cursor:pointer;
+}
+
+.profile img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    border:3px solid #0d6efd;
+}
+
+/* ===== ANNIVERSAIRE ===== */
+
+.birthday{
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+    color:white;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:30px;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+
+.birthday h2{
+    margin-bottom:10px;
+}
+
+/* ===== CARTES ===== */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card i{
+    font-size:40px;
+    color:#0d6efd;
+    margin-bottom:15px;
+}
+
+.card h3{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#666;
+}
+
+/* ===== TABLEAU ===== */
+
+.events{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.events h2{
+    color:#0d6efd;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th{
+    background:#0d6efd;
+    color:white;
+    padding:15px;
+}
+
+table td{
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+table tr:hover{
+    background:#f1f5ff;
+}
+
+button{
+    background:#0d6efd;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+button:hover{
+    background:#084298;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:900px){
+
+.sidebar{
+    width:100%;
+    height:auto;
+    position:relative;
+}
+
+.main{
+    margin-left:0;
+    width:100%;
+}
+
+header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.cards{
+    grid-template-columns:1fr;
+}
+
+table{
+    font-size:14px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+
+<h2>ReminderPro</h2>
+
+</div>
+
+<ul>
+
+<li class="active">
+<a href="#">
+<i class="fa-solid fa-house"></i>
+Tableau de bord
+</a>
+</li>
+
+<li>
+<a href="creer_evenement.html">
+<i class="fa-solid fa-calendar-plus"></i>
+Créer un événement
+</a>
+</li>
+
+<li>
+<a href="mes_evenements.html">
+<i class="fa-solid fa-calendar-days"></i>
+Mes événements
+</a>
+</li>
+
+<li>
+<a href="partager_evenement.html">
+<i class="fa-solid fa-share-nodes"></i>
+Partager un événement
+</a>
+</li>
+
+<li>
+<a href="notifications.html">
+<i class="fa-solid fa-bell"></i>
+Notifications
+</a>
+</li>
+
+<li>
+<a href="profil.html">
+<i class="fa-solid fa-user"></i>
+Mon profil
+</a>
+</li>
+
+
+<li>
+<a href="index.html">
+<i class="fa-solid fa-right-from-bracket"></i>
+Déconnexion
+</a>
+</li>
+
+</ul>
+
+</div>
+
+<div class="main">
+
+<header>
+
+<div class="welcome">
+
+<h1>Bonjour 👋</h1>
+
+<p>Bienvenue sur votre espace personnel.</p>
+
+</div>
+
+<div class="profile">
+
+<i class="fa-solid fa-bell"></i>
+
+<img src="images/user.png" alt="Profil">
+
+</div>
+
+</header>
+
+<div class="birthday">
+
+<h2>🎉 Joyeux anniversaire !</h2>
+
+<p>
+
+Aujourd'hui est votre anniversaire.
+
+Toute l'équipe de ReminderPro vous souhaite beaucoup de bonheur et de réussite.
+
+</p>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+<h3>15</h3>
+
+<p>Événements</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-clock"></i>
+
+<h3>4</h3>
+
+<p>À venir</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<h3>11</h3>
+
+<p>Terminés</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-bell"></i>
+
+<h3>3</h3>
+
+<p>Notifications</p>
+
+</div>
+
+</div>
+
+<section class="events">
+
+<h2>Mes prochains événements</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Événement</th>
+
+<th>Date</th>
+
+<th>Heure</th>
+
+<th>Statut</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="eventsTableBody">
+<!-- Les événements vont s'afficher ici automatiquement -->
+</tbody>
+
+</table>
+
+</section>
+
+</div>
+<script>
+  // ======================================
+// DASHBOARD - ReminderPro (STABLE VERSION)
+// ======================================
+
+
+// ===============================
+// 1. UTILISATEUR
+// ===============================
+const nomUtilisateur = localStorage.getItem("nom") || "Utilisateur";
+
+document.querySelector(".welcome h1").innerHTML =
+"Bonjour, " + nomUtilisateur + " 👋";
+
+const now = new Date();
+
+document.querySelector(".welcome p").innerHTML =
+"Aujourd'hui : " + now.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+});
+
+
+// ===============================
+// 2. ANNIVERSAIRE
+// ===============================
+const naissance = localStorage.getItem("naissance");
+const birthdayBox = document.querySelector(".birthday");
+
+if (!naissance) {
+    birthdayBox.style.display = "none";
+} else {
+
+    const d = new Date(naissance);
+
+    if (
+        d.getDate() === now.getDate() &&
+        d.getMonth() === now.getMonth()
+    ) {
+        birthdayBox.style.display = "block";
+    } else {
+        birthdayBox.style.display = "none";
+    }
+}
+
+
+// ===============================
+// 3. ANIMATION CARTES
+// ===============================
+document.querySelectorAll(".card").forEach(card => {
+
+    card.addEventListener("mouseover", () => {
+        card.style.transform = "translateY(-10px)";
+        card.style.transition = "0.3s";
+    });
+
+    card.addEventListener("mouseout", () => {
+        card.style.transform = "translateY(0px)";
+    });
+
+});
+
+
+// ===============================
+// 4. TABLEAU EVENEMENTS
+// ===============================
+const tbody = document.getElementById("eventsTableBody");
+
+function afficherEvenements() {
+
+    let evenements = JSON.parse(localStorage.getItem("evenements")) || [];
+
+    tbody.innerHTML = "";
+
+    if (evenements.length === 0) {
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="5" style="text-align:center;color:#666;padding:20px;">
+                Aucun événement créé
+            </td>
+        </tr>`;
+        return;
+    }
+
+    evenements.forEach((ev, index) => {
+
+        tbody.innerHTML += `
+        <tr>
+            <td>${ev.titre}</td>
+            <td>${ev.date}</td>
+            <td>${ev.heure}</td>
+            <td>À venir</td>
+            <td>
+                <button onclick="modifierEvent(${index})">Modifier</button>
+                <button onclick="supprimerEvent(${index})">Supprimer</button>
+            </td>
+        </tr>`;
+    });
+}
+
+
+// ===============================
+// 5. SUPPRESSION
+// ===============================
+function supprimerEvent(index) {
+
+    let evenements = JSON.parse(localStorage.getItem("evenements")) || [];
+
+    if (confirm("Supprimer cet événement ?")) {
+        evenements.splice(index, 1);
+        localStorage.setItem("evenements", JSON.stringify(evenements));
+        afficherEvenements();
+    }
+}
+
+
+// ===============================
+// 6. MODIFICATION
+// ===============================
+function modifierEvent(index) {
+
+    let evenements = JSON.parse(localStorage.getItem("evenements")) || [];
+
+    localStorage.setItem("editEvent", JSON.stringify(evenements[index]));
+    localStorage.setItem("editIndex", index);
+
+    window.location.href = "creer_evenement.html";
+}
+
+
+// ===============================
+// 7. AUDIO (COMPATIBLE PC)
+// ===============================
+const alertSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-07.mp3");
+
+let audioUnlocked = false;
+
+// 🔓 Déblocage audio (obligatoire sur PC)
+document.addEventListener("click", () => {
+
+    if (!audioUnlocked) {
+        alertSound.play()
+        .then(() => {
+            alertSound.pause();
+            alertSound.currentTime = 0;
+            audioUnlocked = true;
+        })
+        .catch(() => {});
+    }
+});
+
+
+// ===============================
+// 8. NOTIFICATIONS TEMPS RÉEL
+// ===============================
+function verifierRappels() {
+
+    let evenements = JSON.parse(localStorage.getItem("evenements")) || [];
+    const nowTime = Date.now();
+
+    evenements.forEach(ev => {
+
+        if (!ev.datetime) return;
+
+        const diff = ev.datetime - nowTime;
+
+        // 🔔 EXACT moment (1 min fenêtre)
+        if (diff > 0 && diff <= 60000) {
+            notifier(ev);
+        }
+
+        if (diff <= 0 && diff >= -60000) {
+            notifier(ev);
+        }
+    });
+}
+
+
+// ===============================
+// 9. NOTIFICATION + SON
+// ===============================
+function notifier(ev) {
+
+    const key = "notified_" + ev.id;
+
+    if (sessionStorage.getItem(key)) return;
+
+    sessionStorage.setItem(key, "true");
+
+    alert("🔔 ÉVÉNEMENT : " + ev.titre);
+
+    if (audioUnlocked) {
+        alertSound.play().catch(() => {});
+    }
+}
+
+
+// ===============================
+// 10. INIT
+// ===============================
+afficherEvenements();
+
+setInterval(verifierRappels, 5000);
+
+setTimeout(() => {
+    alert("Bienvenue sur ReminderPro 🔔");
+}, 1000);
+</script>
+</body>
+
+</html>

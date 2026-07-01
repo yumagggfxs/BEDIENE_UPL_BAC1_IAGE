@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Déconnexion | ReminderPro</title>
+
+<style>
+    body{
+        margin:0;
+        font-family:Arial, sans-serif;
+        background:linear-gradient(135deg,#0d6efd,#4f46e5,#7c3aed);
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:white;
+    }
+
+    .box{
+        text-align:center;
+        background:rgba(255,255,255,0.15);
+        padding:40px;
+        border-radius:15px;
+        backdrop-filter:blur(10px);
+        box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    h1{
+        margin-bottom:15px;
+    }
+
+    p{
+        margin-bottom:25px;
+    }
+
+    a{
+        display:inline-block;
+        padding:12px 25px;
+        background:white;
+        color:#0d6efd;
+        text-decoration:none;
+        border-radius:10px;
+        font-weight:bold;
+        transition:0.3s;
+    }
+
+    a:hover{
+        background:#e2e6ea;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Déconnexion en cours...</h1>
+
+<p>Vous avez été déconnecté avec succès.</p>
+
+<a href="connexion.html">Se reconnecter</a>
+
+</div>
+
+<script>
+// ===============================
+// LOGOUT - ReminderPro
+// ===============================
+
+// Effacer les données utilisateur
+localStorage.removeItem("nom");
+localStorage.removeItem("postnom");
+localStorage.removeItem("prenom");
+localStorage.removeItem("email");
+localStorage.removeItem("telephone");
+localStorage.removeItem("naissance");
+localStorage.removeItem("evenements");
+localStorage.removeItem("editEvent");
+localStorage.removeItem("editIndex");
+
+// Optionnel : message console
+console.log("Utilisateur déconnecté");
+
+// Redirection automatique après 3 secondes
+setTimeout(() => {
+    window.location.href = "connexion.html";
+}, 3000);
+
+</script>
+
+</body>
+
+</html>
